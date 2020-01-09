@@ -26,8 +26,14 @@ void main() {
    //float y = sin(x * u_time) + 1.0;
    //float y = (sin(x * u_time) * 2.0);
    //float y = abs(sin(x * u_time) * 2.0);
-   float y = floor(sin(x * u_time) * 2.0);
+   //float y = floor(sin(x * u_time) * 2.0);
    //float y = fract(sin(x));
+   //float y = mod(x, 0.5);
+   //float y = fract(x);
+  // float y = abs(x);
+  //float y = abs(x);
+  //float y = min(0.0, x);
+  float y = max(0.0, x);
 
    gl_FragColor = vec4(vec3(y*0.5+0.5), 1.0);
      //The first one is the limit or threshold, while the second one is the value we want to check or pass. Any value under the limit will return 0.0 while everything above the limit will return 1.0.
