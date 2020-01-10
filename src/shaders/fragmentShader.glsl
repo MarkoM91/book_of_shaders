@@ -14,30 +14,41 @@ float plotLine(vec2 uv, float y) {
   return smoothstep(y - 0.02, y, uv.y) - smoothstep(y, y + 0.02, uv.y);
 }
 
-float cosineApprox(float x) {
+float cosineApprox(float x){
 
-  float x2 = x * x;
-  float x4 = x2 * x2;
-  float x6 = x4 * x4;
+	float x2 = x * x;
+    float x4 = x2 * x2;
+    float x6 = x4 * x4;
 
-  float fa = 4.0 / 9.0;
-  float fb = 17.0 / 9.0;
-  float fc = 22.0 / 9.0;
+    float fa = 4.0 / 9.0;
+    float fb = 17.0 / 9.0;
+    float fc = 22.0 / 9.0;
 
-  return fa * x6 - fb * x4 + fc * x2;
+    return fa * x6 - fb * x4 + fc * x2;
 }
 
+
 void main() {
-	vec2 uv = gl_FragCoord.xy/u_resolution;
+	vec2 uv = gl_FragCoord.xy / u_resolution.xy;
 
-  //float y = doubleCubicSeatLinear(uv.x, 0.640, 0.827);
-  float y = cosineApprox(uv.x);
+    //float y = cosineApprox(uv.x);
 
-  vec3 gradient = vec3(y);
+    //float y = doubleCubicSeat(uv.x, 0.407, 0.720);
+    //float y = doubleCubicSeat(uv.x, 0.607, 0.247);
 
-  float line = plotLine(uv, y);
+    float y = cosineApprox(uv.x);
+    //float y = doubleCubicSeatLinear(uv.x, 0.347, 0.887);
 
-  vec3 color = (1.0 - line) * gradient + line * lineColor;
+    //float y = doublePolynomialSigmoid(uv.x, 0.347, 0.887, 2.0);
 
-  gl_FragColor = vec4(vec3(color, 1.0);
+    //float y = quadraticPoint(uv.x, 0.233, 0.340);
+    //float y = quadraticPoint(uv.x, 0.500, 0.307);
+
+    vec3 gradient = vec3(y);
+
+    float line = plotLine(uv, y);
+
+    vec3 color = (1.0 - line) * gradient + line * lineColor;
+
+    gl_FragColor = vec4(color, 1.0);
 }
