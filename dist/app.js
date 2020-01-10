@@ -50425,7 +50425,7 @@ function render() {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("#ifdef GL_ES\nprecision mediump float;\n#define GLSLIFY 1\n#endif\n\nuniform vec2 u_resolution;\nuniform vec2 u_mouse;\nuniform float u_time;\n\n#define PI 3.14159265359\n#define HALF_PI 1.5707963267948966\n\nfloat linear(float t) {\n  return t;\n}\n\nvoid main() {\n  vec3 colorA = vec3(0.149, 0.141, 0.912);\n  vec3 colorB = vec3(1.000, 0.833, 0.224);\n  float t = u_time * 0.5;\n  float pct = cubicInOut(t);\n\n  vec2 uv = gl_FragCoord.xy / u_resolution.xy;\n\n  gl_FragColor = vec4(vec3(mix(colorA, colorB, pct)), 1.0);\n}\n");
+/* harmony default export */ __webpack_exports__["default"] = ("#ifdef GL_ES\nprecision mediump float;\n#define GLSLIFY 1\n#endif\n\n#define PI 3.14159265359\n\nuniform vec2 u_resolution;\nuniform vec2 u_mouse;\nuniform float u_time;\n\nvec3 colorA = vec3(0.149,0.141,0.912);\nvec3 colorB = vec3(1.000,0.833,0.224);\n\nfloat plot (vec2 st, float pct){\n  return  smoothstep( pct-0.01, pct, st.y) -\n          smoothstep( pct, pct+0.01, st.y);\n}\n\nvoid main() {\n    vec2 st = gl_FragCoord.xy/u_resolution.xy;\n    vec3 color = vec3(0.0);\n\n    vec3 pct = vec3(st.x);\n\n    // pct.r = smoothstep(0.0,1.0, st.x);\n    // pct.g = sin(st.x*PI);\n    // pct.b = pow(st.x,0.5);\n\n    color = mix(colorA, colorB, pct);\n\n    // Plot transition lines for each channel\n    color = mix(color,vec3(1.0,0.0,0.0),plot(st,pct.r));\n    color = mix(color,vec3(0.0,1.0,0.0),plot(st,pct.g));\n    color = mix(color,vec3(0.0,0.0,1.0),plot(st,pct.b));\n\n    gl_FragColor = vec4(color,1.0);\n}\n");
 
 /***/ }),
 
