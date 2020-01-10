@@ -51,11 +51,47 @@ float doubleExpSeat( float x, float a) {
     return y;
 }
 
+float doubleExpSigmoid(float x, float a) {
+  a = getA(a);
+  a = 1.0 - a;
+
+  float y = 0.0;
+
+  if(x <= 0.5)  {
+    y = pow(2.0 * x, 1.0 / a) / 2.0;
+  } else {
+    y = 1.0 - pow(2.0 * (1.0 - x), 1.0 / a) / 2.0;
+  }
+
+  return y;
+}
+
+float logisticSigmoid(float x, float a) {
+  a = getA(a);
+  a = 1.0 / (1.0 - a) - 1.0;
+
+  float A = 1.0 / (1.0 + exp(0.0 - (x - 0.5) * a * 2.0));
+  float B = 1.0 / (1.0 + exp(a));
+  float C = 1.0 / (1.0 + exp(0.0 - a));
+
+  return (A - B) / (C - B);
+}
+
 void main() {
 	vec2 uv = gl_FragCoord.xy / u_resolution;
 
     //float y = expEasing(uv.x, 0.867);	//ease in
-    //float y = doubleExpSeat(uv.x, 0.220);	//ease in
+    //float y = expEasing(uv.x, 0.220);	//ease in
+    //float y = doubleExpSeat(uv.x, 0.147);	//ease in
+    //float y = doubleExpSeat(uv.x, 0.607);	//ease in
+    //float y = doubleExpSeat(uv.x, 0.907);	//ease in
+    //float y = doubleExpSigmoid(uv.x, 0.367);
+    //float y = doubleExpSigmoid(uv.x, 0.727);
+    //float y = doubleExpSigmoid(uv.x, 0.887);
+    //float y = logisticSigmoid(uv.x, 0.0);
+  //float y = logisticSigmoid(uv.x, 0.787);
+    //float y = logisticSigmoid(uv.x, 0.920);
+  float y = logisticSigmoid(uv.x, 0.987);
 
     vec3 gradient = vec3(y);
 
