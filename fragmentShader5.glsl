@@ -8,26 +8,9 @@ uniform float u_time;
 
 const vec3 lineColor = vec3(0.0, 1.0, 0.0);
 
-float slopeFromT (float t, float A, float B, float C){
-  float dtdx = 1.0/(3.0*A*t*t + 2.0*B*t + C);
-  return dtdx;
-}
-
-float xFromT (float t, float A, float B, float C, float D){
-  float x = A*(t*t*t) + B*(t*t) + C*t + D;
-  return x;
-}
-
-float yFromT (float t, float E, float F, float G, float H){
-  float y = E*(t*t*t) + F*(t*t) + G*t + H;
-  return y;
-}
-
 float plotLine(vec2 uv, float y) {
   return smoothstep(y - 0.02, y, uv.y) - smoothstep(y, y + 0.02, uv.y);
 }
-
-float constrain(float y, float a, float b);
 
 float cubicBezier (float x, float a, float b, float c, float d){
   float y0a = 0.00; // initial y
@@ -57,7 +40,7 @@ float cubicBezier (float x, float a, float b, float c, float d){
     float currentx = xFromT (currentt, A,B,C,D);
     float currentslope = slopeFromT (currentt, A,B,C);
     currentt -= (currentx - x)*(currentslope);
-    currentt = constrain(currentt, 0.0, 1.0);
+    currentt = constrain(currentt, 0,1);
   }
 
   float y = yFromT (currentt,  E,F,G,H);
@@ -65,11 +48,25 @@ float cubicBezier (float x, float a, float b, float c, float d){
 }
 
 // Helper functions:
+float slopeFromT (float t, float A, float B, float C){
+  float dtdx = 1.0/(3.0*A*t*t + 2.0*B*t + C);
+  return dtdx;
+}
+
+float xFromT (float t, float A, float B, float C, float D){
+  float x = A*(t*t*t) + B*(t*t) + C*t + D;
+  return x;
+}
+
+float yFromT (float t, float E, float F, float G, float H){
+  float y = E*(t*t*t) + F*(t*t) + G*t + H;
+  return y;
+}
 
 void main() {
 	vec2 uv = gl_FragCoord.xy / u_resolution;
 
-  float y = cubicBezier(uv.x, 0.500, 0.100, 0.340, 0.873);
+  float y = circularEaseIn(uv.x);
 
     vec3 gradient = vec3(y);
 
