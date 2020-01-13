@@ -14,16 +14,12 @@ float rect(in vec2 st, in vec2 size){
 void main(){
     // Screen dimensions and set the base color.
     vec2 st = gl_FragCoord.xy/u_resolution.xy;
-
-    vec3 influenced_color = vec3(0.745, 0.696, 0.529);
-		vec3 influencing_color_A = vec3(0.418,0.735,0.780);
-	  vec3 influencing_color_B = vec3(0.065,0.066,0.290);
-
 		vec3 color = vec3(0.0);
 
-		color = mix(influencing_color_A, influencing_color_B, st.y);
+		float left = step(0.1, st.x);
+		float bottom = step(0.1, st.y);
 
-		color = mix(color, influenced_color, rect(st, vec2(0.030, 0.370)));
+		color = vec3(left * bottom);
 
     // Output.
     gl_FragColor = vec4(color,1.0);

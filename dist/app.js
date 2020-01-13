@@ -50425,7 +50425,7 @@ function render() {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("#ifdef GL_ES\nprecision mediump float;\n#define GLSLIFY 1\n#endif\n\nuniform vec2 u_resolution;\nuniform float u_time;\n\nfloat rect(in vec2 st, in vec2 size){\n\tsize = 0.25-size*0.25;\n    vec2 uv = smoothstep(size,size+size*vec2(0.002),st*(1.0-st));\n\treturn uv.x*uv.y;\n}\n\nvoid main(){\n    // Screen dimensions and set the base color.\n    vec2 st = gl_FragCoord.xy/u_resolution.xy;\n\n    vec3 influenced_color = vec3(0.515, 0.435, 0.415);\n\n\t\tvec3 influencing_color_A = vec3(0.325, 0.278, 0.209);\n\t  vec3 influencing_color_B = vec3(0.487,0.364,0.565);\n\n    vec3 color = mix(influencing_color_A, influencing_color_B, step(0.5, st.y));\n\n\t\tcolor = mix(color, influenced_color, rect(abs(( st -vec2( 0.0, 0.5)) * vec2(1.0, 2.0)), vec2(0.01, 0.04) ));\n\n    // Output.\n    gl_FragColor = vec4(color,1.0);\n}\n");
+/* harmony default export */ __webpack_exports__["default"] = ("#ifdef GL_ES\nprecision mediump float;\n#define GLSLIFY 1\n#endif\n\nuniform vec2 u_resolution;\nuniform float u_time;\n\nvoid main(){\n    // Screen dimensions and set the base color.\n    vec2 st = gl_FragCoord.xy/u_resolution.xy;\n\t\tvec3 color = vec3(0.0);\n\n\t\t//float left = step(0.1, st.x);\n\t\t//float bottom = step(0.1, st.y);\n\n\t\t//color = vec3(left * bottom);\n\t\t//\n\t\tvec2 borders = step(vec2(0.1), st);\n\t\tfloat pct = borders.x * borders.y;\n\n\t\tcolor = vec3(pct);\n    // Output.\n    gl_FragColor = vec4(color,1.0);\n}\n");
 
 /***/ }),
 
