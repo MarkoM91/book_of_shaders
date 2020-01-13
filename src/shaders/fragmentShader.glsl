@@ -2,23 +2,13 @@
 precision mediump float;
 #endif
 
-#define TWO_PI 6.28318530718
-
 uniform vec2 u_resolution;
 uniform float u_time;
 
-vec3 hsb2rgb( in vec3 c ){
-    vec3 rgb = clamp(abs(mod(c.x*6.0+vec3(0.0,4.0,2.0),
-                             6.0)-3.0)-1.0,
-                     0.0,
-                     1.0 );
-    rgb = rgb*rgb*(3.0-2.0*rgb);
-    return c.z * mix(vec3(1.0), rgb, c.y);
-}
-
-float circle(vec2 s, float rad) {
-  vec2 dist = s - vec2(0.5);
-  return 1.0 - smoothstep(rad - (rad * 0.01), rad + (rad * 0.01), dot( dist, dist) *8.0);
+float rect(in vec2 st, in vec2 size) {
+  size = 0.25 - size * 0.25;
+  vec2 uv = smoothstep(size, size + size * vec2(0.002), st * (1.0 - st));
+  return uv.x * uv.y;
 }
 
 void main(){
@@ -26,20 +16,14 @@ void main(){
     vec2 st = gl_FragCoord.xy/u_resolution;
     vec3 color = vec3(0.0);
 
-    // Calculate the color part of the wheel.
-    vec2 toCenter = vec2(0.5) - st;
-    float angle = atan(toCenter.y, toCenter.x);
-    float radius = length(toCenter) * 4.0;
+    vec3 influenced_color = vec3(0.745, 0.678, 0.539);
 
-    // Adding the time variable to the angle calc makes the spinning happen.
-    vec3 colors = hsb2rgb(vec3((angle / TWO_PI) + u_time, radius, 1.0));
+    vec3 influencing_color_A = vec3(0.653, 0.918, 0.985);
+    vec3 influencing_color_B = vec3(0.980, 0.576, 0.113);
 
-    vec3 outerCircle = vec3(circle(st, 0.5));
-    vec3 innerCircle = vec3(circle(st, 0.2));
+    vec3 color = mix(influencing_color_A, influencing_color_B, steo(0.5, st.x))
 
-
-    // Color the circle with the rgb colors, then subtract the inner circle.
-    color = outerCircle * colors - innerCircle;
+    color = mix(color, influenced_color, rect(abs((st - vec2(0.5, 0.0)) * vec2(2.0, 1.0)), vec2(0.05, 0.125)));
 
     // Output.
     gl_FragColor = vec4(color,1.0);
