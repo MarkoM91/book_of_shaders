@@ -50425,7 +50425,7 @@ function render() {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("#ifdef GL_ES\nprecision mediump float;\n#define GLSLIFY 1\n#endif\n\nuniform vec2 u_resolution;\nuniform float u_time;\n\nvoid main(){\n    vec2 st = gl_FragCoord.xy/u_resolution.xy;\n    vec3 color = vec3(0.0);\n\n    // bottom-left\n    vec2 bl = step(vec2(0.1),st);\n    float pct = bl.x * bl.y;\n\n    // top-right\n    vec2 tr = step(vec2(0.1),1.0-st);\n    pct *= tr.x * tr.y;\n\n    color = vec3(pct);\n\n    gl_FragColor = vec4(color,1.0);\n}\n");
+/* harmony default export */ __webpack_exports__["default"] = ("#ifdef GL_ES\nprecision mediump float;\n#define GLSLIFY 1\n#endif\n\nuniform vec2 u_resolution;\nuniform float u_time;\n\nvoid main(){\n    vec2 st = gl_FragCoord.xy/u_resolution.xy;\n    vec3 color = vec3(0.0);\n\n    // bottom-left\n    vec2 bl = step(vec2(0.1),st * 0.25);\n    float pct = bl.x * bl.y;\n\n    // top-right\n    vec2 tr = step(vec2(0.1),(1.0-st) * 0.25);\n    pct *= tr.x * tr.y;\n\n    color = vec3(pct);\n\n    gl_FragColor = vec4(color,1.0);\n}\n");
 
 /***/ }),
 
