@@ -5,45 +5,24 @@ precision mediump float;
 uniform vec2 u_resolution;
 uniform float u_time;
 
-vec3 red    = vec3(0.725, 0.141, 0.149);
-vec3 beige  = vec3(.976, .949, .878);
-
-float Band(float pos, float width)
-{
-
-   return smoothstep(width - 0.2, width, pos) - smoothstep(width, width + 0.00000001, pos);
-}
-
-// uses 2 bands
-float Rectangle(vec2 pos, float width, float height)
-{
-   return Band(pos.x, width) * Band(pos.y, height);
-}
-
-
-
 void main(){
     vec2 uv = gl_FragCoord.xy/u_resolution.xy;
+    float pct = 0.0;
 
-    // center origin
-    uv -= 0.5;
+    // a. The DISTANCE from the pixel to the center
+    pct = distance(uv,vec2(0.5));
 
-    // adjust for aspect ratio
-    uv.x *= u_resolution.x / u_resolution.y;
-    // flip x coords, not sure why their wrong...
-    uv.x = -uv.x;
+     //b. The LENGTH of the vector
+    //    from the pixel to the center
+    // vec2 toCenter = vec2(0.5)-uv;
+    // pct = length(toCenter);
 
-    float width = 0.15;
-    float height = 0.3;
-    float margin = 0.025;
+    // c. The SQUARE ROOT of the vector
+    //    from the pixel to the center
+     vec2 tC = vec2(0.5)-uv;
+     pct = sqrt(tC.x*tC.x+tC.y*tC.y);
 
-    vec3 col = beige;
+    vec3 color = vec3(pct);
 
-
-    vec2 rectPos = vec2(uv.x, uv.y);
-    float redRect = Rectangle(rectPos, width * 2.1, height);
-
-    col = mix(col, red, redRect);
-
-    gl_FragColor = vec4(col,1.0);
+    gl_FragColor = vec4( color, 1.0 );
 }
