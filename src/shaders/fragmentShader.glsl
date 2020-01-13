@@ -6,7 +6,7 @@ uniform vec2 u_resolution;
 uniform float u_time;
 
 vec3 red    = vec3(0.725, 0.141, 0.149);
-
+   vec3 beige  = vec3(.976, .949, .878);
 
 float Band(float pos, float width)
 {
@@ -36,6 +36,9 @@ void main(){
     float width = 0.15;
     float height = 0.3;
     float margin = 0.025;
+
+    vec3 col = beige;
+
 
     vec2 rectPos = vec2(uv.x - width * 5.0, uv.y - height - 0.1);
     float redRect = Rectangle(rectPos, width * 3.0, height);
