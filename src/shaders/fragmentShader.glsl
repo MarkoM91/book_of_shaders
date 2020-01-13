@@ -7,19 +7,18 @@ uniform float u_time;
 
 
 void main(){
-    // Screen dimensions and set the base color.
     vec2 st = gl_FragCoord.xy/u_resolution.xy;
-		vec3 color = vec3(0.0);
+    vec3 color = vec3(0.0);
 
-		//float left = step(0.1, st.x);
-		//float bottom = step(0.1, st.y);
+    // bottom-left
+    vec2 bl = step(vec2(0.1),st);
+    float pct = bl.x * bl.y;
 
-		//color = vec3(left * bottom);
-		//
-		vec2 borders = step(vec2(0.1), st);
-		float pct = borders.x * borders.y;
+    // top-right
+    vec2 tr = step(vec2(0.1),1.0-st);
+    pct *= tr.x * tr.y;
 
-		color = vec3(pct);
-    // Output.
+    color = vec3(pct);
+
     gl_FragColor = vec4(color,1.0);
 }
