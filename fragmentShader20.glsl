@@ -15,14 +15,15 @@ void main(){
     // Screen dimensions and set the base color.
     vec2 st = gl_FragCoord.xy/u_resolution.xy;
 
-    vec3 influenced_color = vec3(0.515, 0.435, 0.415);
+    vec3 influenced_color = vec3(0.745, 0.696, 0.529);
+		vec3 influencing_color_A = vec3(0.418,0.735,0.780);
+	  vec3 influencing_color_B = vec3(0.065,0.066,0.290);
 
-		vec3 influencing_color_A = vec3(0.325, 0.278, 0.209);
-	  vec3 influencing_color_B = vec3(0.487,0.364,0.565);
+		vec3 color = vec3(0.0);
 
-    vec3 color = mix(influencing_color_A, influencing_color_B, step(0.5, st.y));
+		color = mix(influencing_color_A, influencing_color_B, st.y);
 
-		color = mix(color, influenced_color, rect(abs(( st -vec2( 0.0, 0.5)) * vec2(1.0, 2.0)), vec2(0.01, 0.04) ));
+		color = mix(color, influenced_color, rect(st, vec2(0.030, 0.370)));
 
     // Output.
     gl_FragColor = vec4(color,1.0);
