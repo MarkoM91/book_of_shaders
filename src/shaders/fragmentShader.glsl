@@ -40,8 +40,8 @@ void main(){
     vec3 col = beige;
 
 
-    vec2 rectPos = vec2(uv.x - width * 5.0, uv.y - height - 0.1);
-    float redRect = Rectangle(rectPos, width * 3.0, height);
+    vec2 rectPos = vec2(uv.x, uv.y);
+    float redRect = Rectangle(rectPos, width * 2.1, height);
 
     col = mix(col, red, redRect);
 
