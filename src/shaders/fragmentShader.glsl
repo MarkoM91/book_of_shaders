@@ -11,7 +11,7 @@ vec3 beige  = vec3(.976, .949, .878);
 float Band(float pos, float width)
 {
 
-   return smoothstep(width - 0.09, width, pos) - smoothstep(width, width + 0.04, pos);
+   return smoothstep(width - 0.2, width, pos) - smoothstep(width, width + 0.00000001, pos);
 }
 
 // uses 2 bands
