@@ -25,7 +25,7 @@ void main(){
 
     vec3 color = mix(mix(influencing_color_A, influencing_color_a, step(0.3, st.y)), mix(influencing_color_b, influencing_color_B, step(0.7, st.y)), step(0.5, st.y));
 
-    color = mix(color, influenced_color, rect(abs((st - vec2(0.0, 0.5)) * vec2(1.0, 1.75)), vec2(0.025, 0. 09)));
+    color = mix(color, influenced_color, rect(abs((st - vec2(1.0, 0.5)) * vec2(1.0, 1.75)), vec2(0.025, 0.09)));
 
     // Output.
     gl_FragColor = vec4(color,1.0);
