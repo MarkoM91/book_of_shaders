@@ -6,12 +6,12 @@ uniform vec2 u_resolution;
 uniform float u_time;
 
 vec3 red    = vec3(0.725, 0.141, 0.149);
-vec3 beige  = vec3(.976, .949, .878);
+   vec3 beige  = vec3(.976, .949, .878);
 
 float Band(float pos, float width)
 {
-
-   return smoothstep(width - 0.09, width, pos) - smoothstep(width, width + 0.04, pos);
+   float halfWidth = width * 0.5;
+   return step(-halfWidth, pos) - step(halfWidth, pos);
 }
 
 // uses 2 bands
