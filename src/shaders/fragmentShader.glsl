@@ -4,29 +4,33 @@ precision mediump float;
 
 uniform vec2 u_resolution;
 uniform float u_time;
-#define PI 3.14159265359
 
-
-const vec3 lineColor = vec3(0.0, 1.0, 0.0);
-
-float plotLine(vec2 uv, float y){
-    return smoothstep(y - 0.02, y, uv.y) -
-           smoothstep(y, y + 0.02, uv.y);
+float circle(coord, center, radius, blur) {
+  vec2 dist = coord - center;
+  return 1.0 - smoothstep(pow(radius - blur, 2.0), pow(radius + blur, 2.0), dot(dist, dist));
 }
 
+float star(coord, center, radius, points, blur, rot) {
+  vec2 p = center - coord;
+
+  float d = length(p) * 2.0;
+  float a = atan(p.y, p.x);
+
+  float f = (cos(a * points + rot) + 1.0) / 4.0 + 0.5;
+  return 1.0 - smoothstep(f * radius - blur / 2.0, f * radius + blur / 2.0, d);
+}
 
 void main() {
   vec2 uv = gl_FragCoord.xy / u_resolution.xy;
-  vec3 color = vec3(0.0);
+  float radius = 200.0;
+  float blur = 100.0;
 
-  vec2 pos = vec2(0.5) - uv;
+  vec4 c1 = vec4(0.1, 0.6, 1.0, 1.0);
+  vec4 c2 = vec4(0.0, 0.8, 1.0, 1.0);
+  vec4 c3 = vec4(0.2, 1.0, 0.5, 1.0);
+  vec4 c4 = vec4(0.3, 1.0, 1.0, 1.0);
 
-  float r = length(pos) * 2.0;
-  float a = atan(pos.y, pos.x);
 
-  float f = cos(a * 3.0);
-
-  color = vec3(1.0 - smoothstep(f, f + 0.02, r));
 
   gl_FragColor = vec4(color, 1.0);
 }

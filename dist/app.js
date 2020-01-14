@@ -50425,7 +50425,7 @@ function render() {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("#ifdef GL_ES\nprecision mediump float;\n#define GLSLIFY 1\n#endif\n\nuniform vec2 u_resolution;\nuniform float u_time;\n#define PI 3.14159265359\n\nconst vec3 lineColor = vec3(0.0, 1.0, 0.0);\n\nfloat plotLine(vec2 uv, float y){\n    return smoothstep(y - 0.02, y, uv.y) -\n           smoothstep(y, y + 0.02, uv.y);\n}\n\nvoid main() {\n  vec2 uv = gl_FragCoord.xy / u_resolution.xy;\n  vec3 color = vec3(0.0);\n\n  vec2 pos = vec2(0.5) - uv;\n\n  float r = length(pos) * 2.0;\n  float a = atan(pos.y, pos.x);\n\n  float f = cos(a * 3.0);\n\n  color = vec3(1.0 - smoothstep(f, f + 0.02, r));\n\n  gl_FragColor = vec4(color, 1.0);\n}\n");
+/* harmony default export */ __webpack_exports__["default"] = ("#ifdef GL_ES\nprecision mediump float;\n#define GLSLIFY 1\n#endif\n\nuniform vec2 u_resolution;\nuniform float u_time;\n\nfloat circle(coord, center, radius, blur) {\n  vec2 dist = coord - center;\n  return 1.0 - smoothstep(pow(radius - blur, 2.0), pow(radius + blur, 2.0), dot(dist, dist));\n}\n\nfloat star(coord, center, radius, points, blur, rot) {\n  vec2 p = center - coord;\n\n  float d = length(p) * 2.0;\n  float a = atan(p.y, p.x);\n\n  float f = (cos(a * points + rot) + 1.0) / 4.0 + 0.5;\n  return 1.0 - smoothstep(f * radius - blur / 2.0, f * radius + blur / 2.0, d);\n}\n\nvoid main() {\n  vec2 uv = gl_FragCoord.xy / u_resolution.xy;\n  float radius = 200.0;\n  float blur = 100.0;\n\n  vec4 c1 = vec4(0.1, 0.6, 1.0, 1.0);\n  vec4 c2 = vec4(0.0, 0.8, 1.0, 1.0);\n  vec4 c3 = vec4(0.2, 1.0, 0.5, 1.0);\n  vec4 c4 = vec4(0.3, 1.0, 1.0, 1.0);\n\n  gl_FragColor = vec4(color, 1.0);\n}\n");
 
 /***/ }),
 
