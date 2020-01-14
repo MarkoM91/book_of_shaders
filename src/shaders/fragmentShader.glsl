@@ -7,24 +7,20 @@ uniform float u_time;
 
 void main() {
   vec2 st = gl_FragCoord.xy/u_resolution.xy;
-  vec3 backgroundColor = vec3(1.0);
-
-  vec3 color1 = vec3(0.216, 0.471, 0.698);
-  vec3 color2 = vec3(1.0, 0.329, 0.298);
-  vec3 color3 = vec3(0.867, 0.910, 0.247);
+  vec2 backgroundColor = vec3(1.0);
+  vec3 axesColor = vec3(0.0, 0.0, 1.0);
+  vec3 gridColor = vec3(0.5);
 
   vec3 pixel = backgroundColor;
 
-  float leftCoord = 0.54;
-  float rightCoord = 0.55;
-  if(st.x < rightCoord && st.x > leftCoord) pixel = color1;
+  const float tickWidth = 0.1;
+  for(float i = 0.0; i < 1.0; i += tickWidth)  {
+    if(abs(st.x - i) < 0.002) pixel = gridColor;
+    if(abs(st.y - i) < 0.002) pixel = gridColor;
+  }
 
-  float lineCoordinate = 0.4;
-  float lineThickness = 0.003;
-
-  if(abs(st.x - lineCoordinate) < lineThickness) pixel = color2;
-
-  if(abs(st.y - 0.6) < 0.01) pixel = color3;
+  if(abs(st.x) < 0.005) pixel = axesColor;
+  if(abs(st.y) < 0.006) pixel = axesColor;  
 
   gl_FragColor = vec4(pixel, 1.0);
 }
