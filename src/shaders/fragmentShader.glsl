@@ -4,29 +4,29 @@ precision mediump float;
 
 uniform vec2 u_resolution;
 uniform float u_time;
+#define PI 3.14159265359
 
-void main(){
-    vec2 st = gl_FragCoord.xy/u_resolution.xy;
-    st.x *= u_resolution.x/u_resolution.y;
 
-    vec3 color = vec3(0.0);
-    float d = 0.0;
+const vec3 lineColor = vec3(0.0, 1.0, 0.0);
 
-    //We start by moving the coordinate system to the center and shrinking it in half in order to remap the position values between -1 and 1
-    st = st * 2.0 - 1.0;
+float plotLine(vec2 uv, float y){
+    return smoothstep(y - 0.02, y, uv.y) -
+           smoothstep(y, y + 0.02, uv.y);
+}
 
-    //Let’s take a look at the distance field formula on line 19.
-    //There we are calculating the distance to the position on (.3,.3) or vec3(.3) in all four quadrants (that’s what abs() is doing there).
-    //d = length(abs(st) - 0.3);
-  //  d = length( min(abs(st)-.3,0.) );
-     d = length( max(abs(st)-.3,0.) );
 
-    //vec3 color = vec3(circle(uv, 0.9));
+void main() {
+  vec2 uv = gl_FragCoord.xy / u_resolution.xy;
+  vec3 color = vec3(0.0);
 
-    //Also on line 24 we are visualizing the distance field values using a fract() function making it easy to see the pattern they create.
-    // The distance field pattern repeats over and over like rings in a Zen garden.
-   //gl_FragColor = vec4(vec3( step(.3,d) ),1.0);
-   //gl_FragColor = vec4(vec3( step(.3,d) * step(d,.4)),1.0);
-   //gl_FragColor = vec4(vec3( smoothstep(.3,.4,d)* smoothstep(.6,.5,d)) ,1.0);
-    gl_FragColor = vec4( vec3(fract(d * 10.0)), 1.0);
+  vec2 pos = vec2(0.5) - uv;
+
+  float r = length(pos) * 2.0;
+  float a = atan(pos.y, pos.x);
+
+  float f = cos(a * 3.0);
+
+  color = vec3(1.0 - smoothstep(f, f + 0.02, r));
+
+  gl_FragColor = vec4(color, 1.0);
 }
