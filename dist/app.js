@@ -50425,7 +50425,7 @@ function render() {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("#ifdef GL_ES\nprecision mediump float;\n#define GLSLIFY 1\n#endif\n\nuniform vec2 u_resolution;\nuniform float u_time;\n\nfloat circle(in vec2 _st, in float _radius) {\n  vec2 dist = _st - vec2(0.5);\n  return 1.0 - smoothstep(_radius - (_radius * 0.01),\n                          _radius + (_radius * 0.01),\n                          dot(dist, dist)* 4.0\n  );\n}\n\nvoid main(){\n    vec2 uv = gl_FragCoord.xy/u_resolution.xy;\n    vec3 color = vec3(circle(uv, 0.9));\n\n    gl_FragColor = vec4( color, 1.0 );\n}\n");
+/* harmony default export */ __webpack_exports__["default"] = ("#ifdef GL_ES\nprecision mediump float;\n#define GLSLIFY 1\n#endif\n\nuniform vec2 u_resolution;\nuniform float u_time;\n\nvoid main(){\n    vec2 st = gl_FragCoord.xy/u_resolution.xy;\n    st.x *= u_resolution.x/u_resolution.y;\n\n    vec3 color = vec3(0.0);\n    float d = 0.0;\n\n    st = st * 2.0 - 1.0;\n\n    d = length(abs(st) - 0.3);\n    //vec3 color = vec3(circle(uv, 0.9));\n\n    gl_FragColor = vec4( vec3(fract(d * 10.0)), 1.0);\n}\n");
 
 /***/ }),
 
