@@ -2,8 +2,7 @@
 precision mediump float;
 #endif
 
-#define TWOPI 6.28318530718
-
+#define TWOPI 6.28318530718;
 
 uniform vec2 u_resolution;
 uniform float u_time;
@@ -21,8 +20,11 @@ void main() {
   vec3 pixel = bgCol;
   float edge, variable, ret;
 
+  // divide the screen into four parts horizontally for different
+	// examples
   if(p.x < 0.25)  {
-    ret = p.y;
+    ret = p.y; // the brightness value is assigned the y coordinate
+              // it'll create a gradient
   }
 
   else if(p.x < 0.5) {
