@@ -50425,7 +50425,7 @@ function render() {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("#ifdef GL_ES\nprecision mediump float;\n#define GLSLIFY 1\n#endif\n\nuniform vec2 u_resolution;\nuniform float u_time;\n\nvoid main() {\n  vec2 r = vec2( gl_FragCoord.xy - 0.5 * u_resolution.xy );\n\n  gl_FragColor = vec4(pixel, 1.0);\n}\n");
+/* harmony default export */ __webpack_exports__["default"] = ("#ifdef GL_ES\nprecision mediump float;\n#define GLSLIFY 1\n#endif\n\nuniform vec2 u_resolution;\nuniform float u_time;\n\nvoid main() {\n  vec2 r = vec2( gl_FragCoord.xy - 0.5 * u_resolution.xy );\n  r = 2.0 * r.xy / u_resolution.y;\n\n  vec3 backgroundColor = vec3(1.0);\n  vec3 axesColor = vec3(0.0, 0.0, 1.0);\n  vec3 gridColor = vec3(0.5);\n\n  vec3 pixel = backgroundColor;\n  const float tickWidth = 0.1;\n  for(float i = -2.0; i < 2.0; i += tickWidth)  {\n    if(abs(r.x - i) < 0.004) pixel = gridColor;\n    if(abs(r.y - i) < 0.004) pixel = gridColor;\n  }\n\n  if(abs(r.x) < 0.006) pixel = axesColor;\n  if(abs(r.y) < 0.007) pixel = axesColor;\n\n  gl_FragColor = vec4(pixel, 1.0);\n}\n");
 
 /***/ }),
 
