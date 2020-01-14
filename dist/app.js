@@ -50425,7 +50425,7 @@ function render() {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("#ifdef GL_ES\nprecision mediump float;\n#define GLSLIFY 1\n#endif\n\nuniform vec2 u_resolution;\nuniform float u_time;\n\nvoid main() {\n  vec2 st = gl_FragCoord.xy/u_resolution.xy;\n  vec3 backgroundColor = vec3(1.0);\n\tvec3 axesColor = vec3(0.0, 0.0, 1.0);\n\tvec3 gridColor = vec3(0.5);\n\n\t// start by setting the background color. If pixel's value\n\t// is not overwritten later, this color will be displayed.\n\tvec3 pixel = backgroundColor;\n\n\t// Draw the grid lines\n\t// we used \"const\" because loop variables can only be manipulated\n\t// by constant expressions.\n\tconst float tickWidth = 0.1;\n\tfor(float i=0.0; i<1.0; i+=tickWidth) {\n\t\t// \"i\" is the line coordinate.\n\t\tif(abs(st.x - i)<0.002) pixel = gridColor;\n\t\tif(abs(st.y - i)<0.002) pixel = gridColor;\n\t}\n\t// Draw the axes\n\tif( abs(st.x)<0.005 ) pixel = axesColor;\n\tif( abs(st.y)<0.006 ) pixel = axesColor;\n\n  gl_FragColor = vec4(pixel, 1.0);\n}\n\n//gl_FragCoord = It tells us at which pixel we are on the screen\n");
+/* harmony default export */ __webpack_exports__["default"] = ("#ifdef GL_ES\nprecision mediump float;\n#define GLSLIFY 1\n#endif\n\nuniform vec2 u_resolution;\nuniform float u_time;\n\nvoid main() {\n  vec2 r = vec2( gl_FragCoord.xy - 0.5 * u_resolution.xy );\n\n  gl_FragColor = vec4(pixel, 1.0);\n}\n");
 
 /***/ }),
 
