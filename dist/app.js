@@ -50425,7 +50425,7 @@ function render() {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("#ifdef GL_ES\nprecision mediump float;\n#define GLSLIFY 1\n#endif\n\nuniform vec2 u_resolution;\nuniform float u_time;\n\nvoid main() {\n  vec2 st = gl_FragCoord.xy/u_resolution.xy;\n  vec2 r = vec2(gl_FragCoord.x / u_resolution.x, gl_FragCoord.y / u_resolution.y);\n\n  vec3 color1 = vec3(0.841, 0.582, 0.594);\n  vec3 color2 = vec3(0.884, 0.850, 0.648);\n  vec3 color3 = vec3(0.348, 0.555, 0.641);\n  vec3 pixel;\n\n  if(r.x < 1.0 / 3.0)  {\n    pixel = color1;\n  } else if(r.x < 2.0/ 3.0) {\n    pixel = color2;\n  } else {\n    pixel = color3;\n  }\n\n  gl_FragColor = vec4(pixel, 1.0);\n}\n\n//gl_FragCoord = It tells us at which pixel we are on the screen\n");
+/* harmony default export */ __webpack_exports__["default"] = ("#ifdef GL_ES\nprecision mediump float;\n#define GLSLIFY 1\n#endif\n\nuniform vec2 u_resolution;\nuniform float u_time;\n\nvoid main() {\n  vec2 st = gl_FragCoord.xy/u_resolution.xy;\n  vec3 backgroundColor = vec3(1.0);\n\n  vec3 color1 = vec3(0.216, 0.471, 0.698);\n  vec3 color2 = vec3(1.0, 0.329, 0.298);\n  vec3 color3 = vec3(0.867, 0.910, 0.247);\n\n  vec3 pixel = backgroundColor;\n\n  float leftCoord = 0.54;\n  float rightCoord = 0.55;\n  if(st.x < rightCoord && st.x > leftCoord) pixel = color1;\n\n  float lineCoordinate = 0.4;\n  float lineThickness = 0.003;\n\n  if(abs(st.x - lineCoordinate) < lineThickness) pixel = color2;\n\n  if(abs(st.y - 0.6) < 0.01) pixel = color3;\n\n  gl_FragColor = vec4(pixel, 1.0);\n}\n\n//gl_FragCoord = It tells us at which pixel we are on the screen\n");
 
 /***/ }),
 
